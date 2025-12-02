@@ -1,4 +1,5 @@
 import streamlit as st
+#This project is published on https://histogramgenerator-grkqo2nz4q8x2odna64ef2.streamlit.app/
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -7,7 +8,10 @@ from scipy import stats
 st.set_page_config(layout="centered")
 st.title("Adam Kadri's Histogram Graphing Generator")
 
-st.header("1) Data input (index, value)")
+tab1, tab2 = st.tabs(["Histogram Generator", "Extra Stats Info"])
+with tab1:
+
+    st.header("1) Data input (index, value)")
 
 input_mode = st.radio("Provide data by hand or upload a CSV:", ["Manually", "Upload CSV"])
 
@@ -165,3 +169,16 @@ with st.expander("Adjust distribution parameters manually"):
     plt.close(fig2)
 
     st.write("Manual parameters:", tuple(float(p) for p in manual_params))
+
+with tab2:
+    st.header("Extra Statistical Information")
+    st.write("**Count:**", len(values))
+    st.write("**Mean:**", float(np.mean(values)))
+    st.write("**Standard Deviation:**", float(np.std(values)))
+    st.write("**Minimum:**", float(np.min(values)))
+    st.write("**Maximum:**", float(np.max(values)))
+    st.write("**25th Percentile (Q1):**", float(np.percentile(values, 25)))
+    st.write("**Median (Q2):**", float(np.median(values)))
+    st.write("**75th Percentile (Q3):**", float(np.percentile(values, 75)))
+    st.write("**Skewness:**", float(stats.skew(values)))
+    st.write("**Kurtosis:**", float(stats.kurtosis(values)))
